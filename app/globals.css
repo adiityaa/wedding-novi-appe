@@ -375,7 +375,6 @@ h2 {
 }
 .gallery-image {
   object-fit: cover;
-  filter: saturate(0.5) sepia(0.12) brightness(0.72);
   pointer-events: none; /* new: stops native image drag */
 }
 .gallery-meta {
