@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 
 interface GalleryProps {
@@ -8,6 +8,31 @@ interface GalleryProps {
   setGalleryIndex: (index: number) => void;
   onNext: () => void;
 }
+
+const FLIP = { duration: 0.8, ease: [0.645, 0.045, 0.355, 1] as const };
+const INSTANT = { duration: 0 };
+
+const pageVariants: Variants = {
+  enter: (dir: number) =>
+    dir > 0 ? { rotateY: 0, zIndex: 1 } : { rotateY: -100, zIndex: 3 },
+  center: {
+    rotateY: 0,
+    zIndex: 2,
+    transition: { rotateY: FLIP, zIndex: INSTANT },
+  },
+  exit: (dir: number) =>
+    dir > 0
+      ? {
+          rotateY: -100,
+          zIndex: 3,
+          transition: { rotateY: FLIP, zIndex: INSTANT },
+        }
+      : {
+          rotateY: 0,
+          zIndex: 1,
+          transition: { rotateY: FLIP, zIndex: INSTANT },
+        },
+};
 
 const gallery = [
   {
@@ -29,9 +54,16 @@ export default function Gallery({
   setGalleryIndex,
   onNext,
 }: GalleryProps) {
-  const next = () => setGalleryIndex((galleryIndex + 1) % gallery.length);
-  const prev = () =>
+  const [direction, setDirection] = useState(1);
+
+  const next = () => {
+    setDirection(1);
+    setGalleryIndex((galleryIndex + 1) % gallery.length);
+  };
+  const prev = () => {
+    setDirection(-1);
     setGalleryIndex((galleryIndex - 1 + gallery.length) % gallery.length);
+  };
 
   return (
     <section
@@ -48,57 +80,59 @@ export default function Gallery({
           </h2>
         </div>
         <div className="gallery-card">
-          <AnimatePresence mode="wait">
+          <div className="gallery-image-wrap">
             <motion.div
-              key={galleryIndex}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -24 }}
-              transition={{ duration: 0.45 }}
-              className="gallery-image-wrap"
+              className="gallery-image-animation"
+              style={{ perspective: 1400 }}
               data-no-page-swipe
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.2}
-              onDragEnd={(_, info) => {
+              onPanEnd={(_, info) => {
                 if (info.offset.x < -50 || info.velocity.x < -400) next();
                 else if (info.offset.x > 50 || info.velocity.x > 400) prev();
               }}
             >
-              <Image
-                src={gallery[galleryIndex].src}
-                alt={gallery[galleryIndex].label}
-                fill
-                sizes="(max-width: 768px) 82vw, 440px"
-                className="gallery-image"
-              />
+              <AnimatePresence initial={false} custom={direction}>
+                <motion.div
+                  key={galleryIndex}
+                  custom={direction}
+                  variants={pageVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    transformOrigin: "left center",
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                  }}
+                >
+                  <Image
+                    src={gallery[galleryIndex].src}
+                    alt={gallery[galleryIndex].label}
+                    fill
+                    sizes="(max-width: 768px) 82vw, 440px"
+                    className="gallery-image"
+                  />
+                </motion.div>
+              </AnimatePresence>
             </motion.div>
-          </AnimatePresence>
-          <div className="gallery-meta">
-            <span>
-              0{galleryIndex + 1} / 0{gallery.length}
-            </span>
-            <p>{gallery[galleryIndex].label}</p>
-            <div className="gallery-controls">
-              <button
-                aria-label="Previous photo"
-                onClick={() =>
-                  setGalleryIndex(
-                    (galleryIndex - 1 + gallery.length) % gallery.length,
-                  )
-                }
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                aria-label="Next photo"
-                onClick={() =>
-                  setGalleryIndex((galleryIndex + 1) % gallery.length)
-                }
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
+            {/* Navigation Buttons - Always Visible */}
+            <button
+              type="button"
+              className="gallery-nav gallery-nav-prev"
+              onClick={prev}
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={28} />
+            </button>
+            <button
+              type="button"
+              className="gallery-nav gallery-nav-next"
+              onClick={next}
+              aria-label="Next image"
+            >
+              <ChevronRight size={28} />
+            </button>
           </div>
         </div>
       </div>

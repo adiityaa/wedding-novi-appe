@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
+import Greeting from "@/components/sections/Guest";
 import Cover from "@/components/sections/Cover";
 import Story from "@/components/sections/Story";
 import Details from "@/components/sections/Details";
@@ -62,7 +63,7 @@ export default function Page() {
       if (gestureLockRef.current) return;
       const nextIndex = Math.max(
         0,
-        Math.min(4, sectionRef.current + direction),
+        Math.min(5, sectionRef.current + direction),
       );
       if (nextIndex === sectionRef.current) return;
       gestureLockRef.current = true;
@@ -76,6 +77,16 @@ export default function Page() {
     };
 
     const onWheel = (event: WheelEvent) => {
+      const target = event.target as HTMLElement | null;
+      const box = target?.closest<HTMLElement>("[data-no-page-swipe]");
+      if (box) {
+        const atTop = box.scrollTop <= 0;
+        const atBottom =
+          box.scrollTop + box.clientHeight >= box.scrollHeight - 1;
+        // let the text scroll; only change section once it hits the end
+        if (!((event.deltaY < 0 && atTop) || (event.deltaY > 0 && atBottom)))
+          return;
+      }
       if (Math.abs(event.deltaY) < 8) return;
       event.preventDefault();
       moveOnePage(event.deltaY > 0 ? 1 : -1);
@@ -153,13 +164,14 @@ export default function Page() {
         </button>
       )}
 
-      <Cover ref={coverRef} onOpen={() => goTo(1)} />
-      <Story onNext={() => goTo(2)} />
-      <Details onNext={() => goTo(3)} />
+      <Greeting ref={coverRef} onOpen={() => goTo(1)} />
+      <Cover />
+      <Story onNext={() => goTo(3)} />
+      <Details onNext={() => goTo(4)} />
       <Gallery
         galleryIndex={galleryIndex}
         setGalleryIndex={setGalleryIndex}
-        onNext={() => goTo(4)}
+        onNext={() => goTo(5)}
       />
       <Closing />
     </main>
