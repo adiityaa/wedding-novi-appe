@@ -13,7 +13,8 @@ export default function Cover() {
         alt="Appe and Novi in white, holding a flower bouquet"
         fill
         priority
-        sizes="(max-width: 768px) 100vw, 720px"
+        quality={75}
+        sizes="100vw"
         className="cover-image"
       />
     </section>

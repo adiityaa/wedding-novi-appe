@@ -2,8 +2,6 @@
 
 import { ChevronDown } from "lucide-react";
 
-import "./Story.css";
-
 interface StoryProps {
   onNext: () => void;
 }
@@ -26,6 +24,9 @@ Desember 2025—yang dulu berbeda kini mulai seirama. Gereja sedikit banyak ikut
 18 Januari 2027—hari Senin—kami akan mengucapkan janji untuk saling memiliki dan menjaga, dari sekarang sampai selama-lamanya. Pada waktu susah maupun senang, pada waktu kelimpahan maupun kekurangan, pada waktu sehat maupun sakit, untuk saling mengasihi dan menghargai, sampai maut memisahkan kami.
 
 Terima kasih untuk orang tua, saudara, keluarga, dan sahabat yang telah menemani dan menjadi support sistem yang luar biasa menyenangkan. Terima kasih atas doa baik kalian.
+
+
+
 `;
 
 export default function Story({ onNext }: StoryProps) {

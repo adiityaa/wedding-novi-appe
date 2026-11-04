@@ -1,4 +1,4 @@
-import { ChevronDown, MapPin } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 interface DetailsProps {
   onNext: () => void;

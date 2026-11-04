@@ -1,7 +1,12 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  LoaderCircle,
+} from "lucide-react";
 
 interface GalleryProps {
   galleryIndex: number;
@@ -55,12 +60,15 @@ export default function Gallery({
   onNext,
 }: GalleryProps) {
   const [direction, setDirection] = useState(1);
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   const next = () => {
+    // setIsImageLoading(true);
     setDirection(1);
     setGalleryIndex((galleryIndex + 1) % gallery.length);
   };
   const prev = () => {
+    // setIsImageLoading(true);
     setDirection(-1);
     setGalleryIndex((galleryIndex - 1 + gallery.length) % gallery.length);
   };
@@ -81,6 +89,16 @@ export default function Gallery({
         </div>
         <div className="gallery-card">
           <div className="gallery-image-wrap">
+            {isImageLoading && (
+              <div className="gallery-loading">
+                <LoaderCircle className="gallery-spinner" size={28} />
+                <span>Memuat foto...</span>
+                <div className="gallery-progress">
+                  <div className="gallery-progress-bar" />
+                </div>
+              </div>
+            )}
+
             <motion.div
               className="gallery-image-animation"
               style={{ perspective: 1400 }}
@@ -112,10 +130,12 @@ export default function Gallery({
                     fill
                     sizes="(max-width: 768px) 82vw, 440px"
                     className="gallery-image"
+                    onLoad={() => setIsImageLoading(false)}
                   />
                 </motion.div>
               </AnimatePresence>
             </motion.div>
+
             {/* Navigation Buttons - Always Visible */}
             <button
               type="button"
@@ -125,6 +145,7 @@ export default function Gallery({
             >
               <ChevronLeft size={28} />
             </button>
+
             <button
               type="button"
               className="gallery-nav gallery-nav-next"

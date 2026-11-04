@@ -22,7 +22,7 @@ const Greeting = forwardRef<HTMLDivElement, GreetingProps>(
         >
           <p className="eyebrow">Dengan penuh syukur</p>
           <h2 id="greeting-title">
-            Dear,
+            Kepada,
             <br />
           </h2>
           <h2 className="greeting-guest">

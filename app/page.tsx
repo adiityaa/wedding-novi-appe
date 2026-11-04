@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 import Greeting from "@/components/sections/Guest";
 import Cover from "@/components/sections/Cover";
@@ -8,6 +8,8 @@ import Story from "@/components/sections/Story";
 import Details from "@/components/sections/Details";
 import Gallery from "@/components/sections/Gallery";
 import Closing from "@/components/sections/Closing";
+
+const TOTAL = 6; // greeting, cover, story, details, gallery, closing
 
 export default function Page() {
   const scrollerRef = useRef<HTMLElement>(null);
@@ -19,8 +21,16 @@ export default function Page() {
   const [showControls, setShowControls] = useState(false);
   const sectionRef = useRef(0);
   const gestureLockRef = useRef(false);
-  const touchStartYRef = useRef<number | null>(null);
 
+  const scrollToIndex = useCallback((index: number) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const i = Math.max(0, Math.min(TOTAL - 1, index));
+    sectionRef.current = i;
+    scroller.scrollTo({ top: i * scroller.clientHeight, behavior: "smooth" });
+  }, []);
+
+  // Audio unlock on real user gestures
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -55,25 +65,18 @@ export default function Page() {
     };
   }, []);
 
+  // Mouse wheel = one section per gesture. Touch is left to native scroll-snap.
   useEffect(() => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
     const moveOnePage = (direction: 1 | -1) => {
       if (gestureLockRef.current) return;
-      const nextIndex = Math.max(
-        0,
-        Math.min(5, sectionRef.current + direction),
-      );
-      if (nextIndex === sectionRef.current) return;
       gestureLockRef.current = true;
-      sectionRef.current = nextIndex;
-      scroller
-        .querySelectorAll<HTMLElement>(".section-panel")
-        [nextIndex]?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToIndex(sectionRef.current + direction);
       window.setTimeout(() => {
         gestureLockRef.current = false;
-      }, 700);
+      }, 800);
     };
 
     const onWheel = (event: WheelEvent) => {
@@ -91,46 +94,45 @@ export default function Page() {
       event.preventDefault();
       moveOnePage(event.deltaY > 0 ? 1 : -1);
     };
-    const onTouchStart = (event: TouchEvent) => {
-      const target = event.target as HTMLElement | null;
-      touchStartYRef.current = target?.closest("[data-no-page-swipe]")
-        ? null
-        : (event.touches[0]?.clientY ?? null);
-    };
-    const onTouchEnd = (event: TouchEvent) => {
-      if (touchStartYRef.current === null) return;
-      const distance =
-        touchStartYRef.current -
-        (event.changedTouches[0]?.clientY ?? touchStartYRef.current);
-      touchStartYRef.current = null;
-      if (Math.abs(distance) > 35) moveOnePage(distance > 0 ? 1 : -1);
-    };
 
     const onScroll = () => {
-      if (!gestureLockRef.current)
-        sectionRef.current = Math.round(
-          scroller.scrollTop / scroller.clientHeight,
-        );
+      sectionRef.current = Math.round(
+        scroller.scrollTop / scroller.clientHeight,
+      );
     };
 
     scroller.addEventListener("wheel", onWheel, { passive: false });
-    scroller.addEventListener("touchstart", onTouchStart, { passive: true });
-    scroller.addEventListener("touchend", onTouchEnd, { passive: true });
     scroller.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       scroller.removeEventListener("wheel", onWheel);
-      scroller.removeEventListener("touchstart", onTouchStart);
-      scroller.removeEventListener("touchend", onTouchEnd);
       scroller.removeEventListener("scroll", onScroll);
+    };
+  }, [scrollToIndex]);
+
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    let timer: number | undefined;
+    const realign = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        const h = scroller.clientHeight;
+        const target = Math.round(scroller.scrollTop / h) * h;
+        if (Math.abs(scroller.scrollTop - target) > 2) {
+          scroller.scrollTo({ top: target, behavior: "auto" });
+        }
+      }, 200);
+    };
+
+    window.addEventListener("resize", realign);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("resize", realign);
     };
   }, []);
 
-  const goTo = (index: number) => {
-    sectionRef.current = index;
-    scrollerRef.current
-      ?.querySelectorAll<HTMLElement>(".section-panel")
-      [index]?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const goTo = (index: number) => scrollToIndex(index);
 
   const toggleAudio = () => {
     const audio = audioRef.current;
@@ -146,7 +148,7 @@ export default function Page() {
         ref={audioRef}
         loop
         muted
-        preload="metadata"
+        preload="auto"
         src="/backsound/diakhirperang-nadineamizah.mp3"
         aria-label="Background music"
       />
