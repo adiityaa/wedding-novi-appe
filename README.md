@@ -80,8 +80,6 @@ appe_novi/
 
 ### `page.tsx` (Root Page)
 
-### Test Commit
-
 The main entry point. Contains:
 
 - **Scroll-snap navigation** — wheel, touch swipe, and "Next" cue buttons move between sections
