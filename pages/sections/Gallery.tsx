@@ -80,12 +80,8 @@ export default function Gallery({
     >
       <div className="gallery-inner">
         <div className="gallery-heading">
-          <p className="eyebrow">Potongan kecil dari kami</p>
-          <h2 id="gallery-title">
-            Lorem Ipsum
-            <br />
-            <em>dolor.</em>
-          </h2>
+          <p className="eyebrow">Cerita, yang ditulis lensa</p>
+          <h2 id="gallery-title">Jalan Saja &mdash;</h2>
         </div>
         <div className="gallery-card">
           <div className="gallery-image-wrap">

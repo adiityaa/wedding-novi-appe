@@ -7,21 +7,20 @@ export default function Closing() {
   return (
     <section className="closing section-panel" aria-labelledby="closing-title">
       <div className="closing-inner">
-        <p className="eyebrow">Dengan segala rasa</p>
         <h2 id="closing-title">
-          Kehadiranmu
+          Terima kasih
           <br />
-          <em>sangat berarti</em>
+          atas segala
           <br />
-          bagi kami.
+          doa baikmu
         </h2>
         <p className="names">Novi &amp; Appe</p>
       </div>
 
       <div className="credits">
-        <p>Ditulis oleh Novi &amp; Appe</p>
-        <span>18 Januari 2027 · Purwodadi</span>
+        <p>Kan terus ku tulis, sampai nafas ini habis</p>
       </div>
+      <span className="closing-span">Jalan Saja</span>
 
       <div className="closing-map" aria-label="Map of the reception venue">
         {isLoading && (

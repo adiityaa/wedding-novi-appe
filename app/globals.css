@@ -741,9 +741,13 @@ h2 em,
   margin: 0;
 }
 
-.credits span {
-  display: block;
-  margin-top: 4px;
+.closing-span {
+  font:
+    14px Arial,
+    sans-serif;
+  text-transform: uppercase;
+  opacity: 0.45;
+  margin-top: -28px;
 }
 
 /* ---------- Mobile ---------- */

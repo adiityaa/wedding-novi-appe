@@ -8,36 +8,29 @@ export default function Details({ onNext }: DetailsProps) {
   return (
     <section className="details section-panel" aria-labelledby="details-title">
       <div className="details-inner">
-        <p className="eyebrow">Hari yang kami nantikan</p>
-        {/* <h2 id="details-title">
-            Meet us
-            <br />
-            <em>under the trees.</em>
-          </h2> */}
+        <p className="eyebrow">Hari Bahagia</p>
+        <h3 className="text-5xl">Senin,</h3>
+        <h3 className="text-4xl">18 Januari 2027</h3>
         <div className="events">
           <article>
-            <span>01</span>
             <div>
               <p className="event-type">Pemberkatan</p>
-              <h3>09:00 — 11:30</h3>
+              <h3>09:00 — 11:00 WIB</h3>
+              <p className="text-bold">Gereja Kristen Jawa Purwodadi</p>
               <p>
-                Gereja Kristen Jawa Purwodadi
-                <br />
                 Jl. Pemuda No.9, Purwodadi, Kec. Purwodadi, Kabupaten Grobogan,
-                Jawa Tengah 58111
+                Jawa Tengah
               </p>
             </div>
           </article>
           <article>
-            <span>02</span>
             <div>
               <p className="event-type">Resepsi</p>
-              <h3>12:00 — selesai</h3>
+              <h3>11:00 — 15.00 WIB</h3>
+              <p className="text-bold">Pendopo Kendi Cinta</p>
               <p>
-                Pendopo Kendi Cinta
-                <br />
                 Jl. Piere Tendean No.27, Purwodadi, Kec. Purwodadi, Kabupaten
-                Grobogan, Jawa Tengah 58111
+                Grobogan, Jawa Tengah
               </p>
             </div>
           </article>
