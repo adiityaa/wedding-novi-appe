@@ -1,5 +1,4 @@
-﻿
-# Jalan Sarta — Wedding Invitation (Appe & Novi)
+﻿# Jalan Sarta — Wedding Invitation (Appe & Novi)
 
 A Next.js (App Router) wedding invitation website with scroll-snap navigation, photo gallery with swipe support, and background music.
 
@@ -24,18 +23,18 @@ A Next.js (App Router) wedding invitation website with scroll-snap navigation, p
 
 ## 🚀 Tech Stack
 
-| Layer | Technology | Version |
-|-------|-----------|---------|
-| Framework | Next.js (App Router) | 16.4.3 |
-| UI Library | React | 19 |
-| Language | TypeScript | 5.7.3 |
-| Styling | Tailwind CSS | 4.3.3 |
-| Animations | Framer Motion | 14.7.1 |
-| Icons | Lucide React | 1.16.0 |
-| UI Primitives | @base-ui/react | 1.5.0 |
-| Styling Utils | class-variance-authority, clsx, tailwind-merge | latest |
-| Analytics | @vercel/analytics | 1.6.1 |
-| Package Manager | pnpm | 12.3.4 |
+| Layer           | Technology                                     | Version |
+| --------------- | ---------------------------------------------- | ------- |
+| Framework       | Next.js (App Router)                           | 16.4.3  |
+| UI Library      | React                                          | 19      |
+| Language        | TypeScript                                     | 5.7.3   |
+| Styling         | Tailwind CSS                                   | 4.3.3   |
+| Animations      | Framer Motion                                  | 14.7.1  |
+| Icons           | Lucide React                                   | 1.16.0  |
+| UI Primitives   | @base-ui/react                                 | 1.5.0   |
+| Styling Utils   | class-variance-authority, clsx, tailwind-merge | latest  |
+| Analytics       | @vercel/analytics                              | 1.6.1   |
+| Package Manager | pnpm                                           | 12.3.4  |
 
 ---
 
@@ -75,12 +74,13 @@ appe_novi/
 
 ### Prerequisites
 
-
 ---
 
 ## 🧩 Components
 
 ### `page.tsx` (Root Page)
+
+### Test Commit
 
 The main entry point. Contains:
 
@@ -158,9 +158,9 @@ All styles are contained in **`app/globals.css`**, including:
 
 ## 📱 Responsive Design
 
-| Viewport | Behavior |
-|----------|----------|
-| **Mobile (≤700px)** | Full-screen invitation, no frame |
+| Viewport             | Behavior                                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Mobile (≤700px)**  | Full-screen invitation, no frame                                                                       |
 | **Desktop (≥701px)** | Invitation centered in a mobile-sized frame (430px max-width) with rounded corners, shadow, and border |
 
 ---
@@ -178,6 +178,7 @@ All styles are contained in **`app/globals.css`**, including:
 ### Change Couple Names / Date
 
 Edit `Closing.tsx`:
+
 ```tsx
 <p className="names">Appe &amp; Novi</p>
 ```
@@ -260,8 +261,8 @@ pnpm start
 
 ## 📜 Available Scripts
 
-| Script | Command | Description |
-|--------|---------|-------------|
-| `dev` | `next dev` | Start dev server with Turbopack |
-| `build` | `next build` | Production build |
-| `start` | `next start` | Production server |
+| Script  | Command      | Description                     |
+| ------- | ------------ | ------------------------------- |
+| `dev`   | `next dev`   | Start dev server with Turbopack |
+| `build` | `next build` | Production build                |
+| `start` | `next start` | Production server               |
