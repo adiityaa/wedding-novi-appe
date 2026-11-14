@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
-import Greeting from "@/pages/sections/Guest";
-import Cover from "@/pages/sections/Cover";
-import Story from "@/pages/sections/Story";
-import Details from "@/pages/sections/Details";
-import Gallery from "@/pages/sections/Gallery";
-import Closing from "@/pages/sections/Closing";
+import Greeting from "@/components/sections/Guest";
+import Cover from "@/components/sections/Cover";
+import Story from "@/components/sections/Story";
+import Details from "@/components/sections/Details";
+import Gallery from "@/components/sections/Gallery";
+import Closing from "@/components/sections/Closing";
 
 const TOTAL = 6; // greeting, cover, story, details, gallery, closing
 

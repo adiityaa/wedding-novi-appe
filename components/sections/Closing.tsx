@@ -20,8 +20,6 @@ export default function Closing() {
       <div className="credits">
         <p>Kan terus ku tulis, sampai nafas ini habis</p>
       </div>
-      <span className="closing-span">Jalan Saja</span>
-
       <div className="closing-map" aria-label="Map of the reception venue">
         {isLoading && (
           <div className="map-loading">
