@@ -5,7 +5,13 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Jalan Saja - Appe & Novi",
   description: "Wedding Invitation Novi & Appe.",
-  generator: "ADoot",
+  generator: "adityadwiaprianto",
+  authors: [
+    {
+      name: "Aditya Dwi Aprianto",
+      url: "https://www.linkedin.com/in/adityadwiaprianto/",
+    },
+  ],
   icons: {
     icon: [],
   },

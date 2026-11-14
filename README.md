@@ -1,4 +1,4 @@
-﻿# Jalan Sarta — Wedding Invitation (Appe & Novi)
+﻿# Jalan Saja — Wedding Invitation (Appe & Novi)
 
 A Next.js (App Router) wedding invitation website with scroll-snap navigation, photo gallery with swipe support, and background music.
 
